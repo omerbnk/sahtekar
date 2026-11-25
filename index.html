@@ -20,7 +20,7 @@ body{margin:0;background:radial-gradient(120% 60% at 50% 0%,#3b2a73 0%,var(--bg)
 .split{display:block}
 h1{font-size:44px;line-height:1;margin:6px 0 4px;font-weight:800;letter-spacing:-1.5px}
 h2{font-size:15px;margin:26px 0 10px;color:var(--mut);font-weight:700;display:flex;justify-content:space-between;align-items:center}
-h2 span button{background:var(--bg2);border:1.5px solid var(--line);color:#fff;border-radius:20px;padding:5px 12px;font:700 13px inherit;font-family:inherit;margin-left:6px}
+h2 span button{background:var(--bg2);border:1.5px solid var(--line);color:#fff;border-radius:20px;padding:5px 12px;font-weight:700;font-size:13px;font-family:inherit;margin-left:6px}
 p.sub{margin:0;color:var(--mut);font-size:15px}
 .row{display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:10px}
 .row b{font-size:17px}.row small{display:block;color:var(--mut);font-weight:500;font-size:12px}
@@ -28,14 +28,14 @@ p.sub{margin:0;color:var(--mut);font-size:15px}
 .step button{width:42px;height:42px;border-radius:50%;border:0;background:var(--acc);color:#fff;font-size:24px;font-weight:800;font-family:inherit}
 .step span{min-width:74px;text-align:center;font-size:22px;font-weight:800}
 .cats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.cat{padding:12px 10px;border-radius:18px;border:2px solid var(--line);background:var(--bg2);color:#fff;font:700 16px inherit;font-family:inherit;text-align:left;display:flex;flex-direction:column;gap:4px;transition:transform .12s}
+.cat{padding:12px 10px;border-radius:18px;border:2px solid var(--line);background:var(--bg2);color:#fff;font-weight:700;font-size:16px;font-family:inherit;text-align:left;display:flex;flex-direction:column;gap:4px;transition:transform .12s}
 .cat:active{transform:scale(.96)}
 .cat i{font-style:normal;font-size:26px}
 .cat.on{background:var(--card);color:var(--ink);border-color:var(--c);box-shadow:0 0 0 2px var(--c)}
 .tog{width:52px;height:30px;border-radius:30px;background:var(--line);border:0;position:relative;flex:none}
 .tog:after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}
 .tog.on{background:var(--ok)}.tog.on:after{left:25px}
-.big{display:block;width:100%;border:0;border-radius:calc(var(--r,28px)*.7);padding:18px;font:800 20px inherit;font-family:inherit;background:var(--acc);color:#fff;margin-top:18px;box-shadow:0 6px 0 rgba(0,0,0,.35)}
+.big{display:block;width:100%;border:0;border-radius:calc(var(--r,28px)*.7);padding:18px;font-weight:800;font-size:20px;font-family:inherit;background:var(--acc);color:#fff;margin-top:18px;box-shadow:0 6px 0 rgba(0,0,0,.35)}
 .big:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.35)}
 .big.alt{background:var(--card);color:var(--ink);box-shadow:0 6px 0 #a79cc9}
 .big.alt:active{box-shadow:0 2px 0 #a79cc9}
@@ -59,11 +59,11 @@ p.sub{margin:0;color:var(--mut);font-size:15px}
 #app{position:relative;z-index:1}
 .name,.card .w,.big,.chip,.tm,.who,h1{font-family:var(--f,'Bricolage Grotesque'),system-ui,sans-serif;font-weight:var(--fw,800)}
 @media(prefers-reduced-motion:reduce){#deco span{animation:none}}
-.back{display:inline-flex;align-items:center;gap:8px;background:var(--bg2);border:2px solid var(--line);color:#fff;border-radius:30px;padding:0 22px 0 16px;min-height:50px;font:800 18px inherit;font-family:inherit;margin-bottom:16px;box-shadow:0 4px 0 rgba(0,0,0,.3)}.back:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
-.inp{width:100%;background:var(--bg2);border:2px solid var(--line);border-radius:16px;color:#fff;padding:14px;font:700 20px inherit;font-family:inherit;outline:0}
+.back{display:inline-flex;align-items:center;gap:8px;background:var(--bg2);border:2px solid var(--line);color:#fff;border-radius:30px;padding:0 22px 0 16px;min-height:50px;font-weight:800;font-size:18px;font-family:inherit;margin-bottom:16px;box-shadow:0 4px 0 rgba(0,0,0,.3)}.back:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
+.inp{width:100%;background:var(--bg2);border:2px solid var(--line);border-radius:16px;color:#fff;padding:14px;font-weight:700;font-size:20px;font-family:inherit;outline:0}
 .inp:focus{border-color:var(--acc)}.inp.code{text-align:center;letter-spacing:8px;text-transform:uppercase}
 .rc{font-size:60px;font-weight:800;letter-spacing:10px;text-align:center;background:var(--bg2);border:2px dashed var(--line);border-radius:20px;padding:10px 0 10px 10px;margin:6px 0 10px}
-.mini{flex:1;background:var(--bg2);border:1.5px solid var(--line);color:#fff;border-radius:14px;padding:10px;font:700 15px inherit;font-family:inherit}
+.mini{flex:1;background:var(--bg2);border:1.5px solid var(--line);color:#fff;border-radius:14px;padding:10px;font-weight:700;font-size:15px;font-family:inherit}
 .chip.me{outline:2px solid #fff}.warn{background:#4a2a1a;border:1.5px solid var(--acc);border-radius:14px;padding:10px 12px;font-size:14px;margin:14px 0}
 .hm{min-height:calc(100vh - 60px);min-height:calc(100dvh - 60px);display:flex;flex-direction:column;justify-content:center}
 .logo{width:112px;height:112px;margin:0 auto 18px;border-radius:34px;background:linear-gradient(145deg,#ff8a3d,#ff4d6d);display:grid;place-items:center;font-size:64px;box-shadow:0 16px 44px rgba(255,90,70,.45);transform:rotate(-6deg)}
@@ -135,7 +135,7 @@ var KEEP=0;function $(h,wide){clearInterval(S.tid);var y=window.scrollY;app.inne
 function theme(k){var r=document.documentElement.style,b=document.body.style;['--acc','--f','--fw','--r'].forEach(function(p){r.removeProperty(p)});b.background='';deco('');if(!k)return;var t=D[k][2].split(','),h=TH[k];r.setProperty('--acc',t[0]);r.setProperty('--f',"'"+h[1]+"'");r.setProperty('--fw',h[2]);r.setProperty('--r',h[3]+'px');b.background='radial-gradient(120% 60% at 50% 0%,'+t[1]+' 0%,'+t[2]+' 65%)';b.backgroundColor=t[2];deco(h[0])}
 function buz(){try{navigator.vibrate&&navigator.vibrate(60)}catch(e){}}
 function catGrid(){return K.map(function(k){var n=D[k][1].split('/').length;return '<button class="cat'+(S.cats[k]?' on':'')+'" style="--c:'+D[k][2].split(',')[0]+'" onclick="tc(\''+k+'\')"><i>'+D[k][0]+'</i><b>'+k+'</b><small>'+n+' kelime</small></button>'}).join('')}
-function catBox(){var c=Object.keys(S.cats).length;return '<h2>Kategoriler <span><em class="cnt">'+c+'/'+K.length+'</em><button onclick="all(1)">Hepsi</button><button onclick="all(0)">Temizle</button></span></h2><div class="cats">'+catGrid()+'</div><div class="err">'+S.err+'</div>'}
+function catBox(){var c=Object.keys(S.cats).length;return '<h2>Kategoriler <span><em class="cnt">'+c+'/'+K.length+'</em><button onclick="selAll(1)">Hepsi</button><button onclick="selAll(0)">Temizle</button></span></h2><div class="cats">'+catGrid()+'</div><div class="err">'+S.err+'</div>'}
 function setup(keep){S.mode='local';theme();KEEP=keep?1:0;
 $(B('home()')+'<h1>Sahtekâr</h1><p class="sub">Telefon elden ele dolaşır. Biri hariç herkes kelimeyi bilir.</p>'+
 '<div class="split"><div><h2>Oyun</h2>'+st('Oyuncu sayısı','n','')+st('Sahtekâr sayısı','imp','')+st('Tartışma süresi','min','dk')+
@@ -147,7 +147,7 @@ function ch(k,d){var v=S[k]+d;
 if(k=='n')v=Math.max(3,Math.min(15,v));else if(k=='min')v=Math.max(0,Math.min(15,v));else v=Math.max(1,Math.min(v,4));
 S[k]=v;var N=S.mode=='online'?O.players.length:S.n,m=Math.max(1,Math.floor((N-1)/2));if(S.imp>m)S.imp=m;rr()}
 function tc(k){if(S.cats[k])delete S.cats[k];else S.cats[k]=1;S.err='';rr()}
-function all(f){S.cats={};if(f)K.forEach(function(k){S.cats[k]=1});rr()}
+function selAll(f){S.err="";S.cats={};if(f)K.forEach(function(k){S.cats[k]=1});rr()}
 function go(){
 var ks=Object.keys(S.cats);
 if(!ks.length){S.err='En az bir kategori seç.';return setup(1)}
@@ -159,35 +159,37 @@ S.cat=p[0];S.word=[p[1][0],hintFor(p[0],p[1][0])];theme(S.cat);S.used[p[1][0]]=1
 var idx=[];for(var i=0;i<S.n;i++)idx.push(i);
 idx.sort(function(){return Math.random()-.5});
 S.roles=(S.surp&&Math.random()<.2)?[]:idx.slice(0,S.imp);
-S.i=0;S.start=Math.floor(Math.random()*S.n);pass()}
+S.i=0;T=0;S.start=Math.floor(Math.random()*S.n);pass()}
 function pass(){
-$(B('setup()')+'<div class="center"><div style="font-size:64px;line-height:1.1">'+D[S.cat][0]+'</div><div class="who">Telefonu ver</div><div class="name">Oyuncu '+(S.i+1)+'</div><p class="sub">Sadece sen bak. Hazır olunca kartı aç.</p><button class="big" onclick="show()">Kartımı göster</button></div>')}
+$(B('bk()')+'<div class="center"><div style="font-size:64px;line-height:1.1">'+D[S.cat][0]+'</div><div class="who">Telefonu ver</div><div class="name">Oyuncu '+(S.i+1)+'</div><p class="sub">Sadece sen bak. Hazır olunca kartı aç.</p><button class="big" onclick="show()">Kartımı göster</button></div>')}
 function show(){
 buz();var imp=S.roles.indexOf(S.i)>-1,last=S.i==S.n-1,h;
 if(imp)h='<div class="card imp"><div class="k">Senin rolün</div><div class="w">SAHTEKÂR</div><div class="k">Kategori: '+S.cat+'</div>'+(S.hint?'<div class="hint">“'+S.word[1]+'”</div>':'')+'</div><p class="sub">Kelimeyi bilmiyorsun. Fark ettirme.</p>';
 else h='<div class="card"><div class="k">Kategori: '+S.cat+'</div><div class="w">'+S.word[0]+'</div><div class="k">'+TH[S.cat][4]+'</div></div><p class="sub">Sahtekâra belli etmeden anlat.</p>';
-$(B('setup()')+'<div class="center"><div class="who">Oyuncu '+(S.i+1)+'</div>'+h+'<button class="big alt" onclick="nx()">'+(last?'Gizle ve oyuna geç':'Gizle, sıradaki')+'</button></div>')}
+$(B('bk()')+'<div class="center"><div class="who">Oyuncu '+(S.i+1)+'</div>'+h+'<button class="big alt" onclick="nx()">'+(last?'Gizle ve oyuna geç':'Gizle, sıradaki')+'</button></div>')}
 function nx(){S.i++;if(S.i>=S.n)play();else pass()}
 var T=0;
 function play(){
-$(B('setup()')+'<div class="center"><div style="font-size:64px;line-height:1.1">'+D[S.cat][0]+'</div><div class="who">Oyun başladı</div><div class="name">Oyuncu '+(S.start+1)+'</div><p class="sub">ilk sen başla. Sırayla kelimeyle ilgili bir ipucu söyleyin, sonra birlikte sahtekârı bulun.</p>'+
+$(B('bk()')+'<div class="center"><div style="font-size:64px;line-height:1.1">'+D[S.cat][0]+'</div><div class="who">Oyun başladı</div><div class="name">Oyuncu '+(S.start+1)+'</div><p class="sub">ilk sen başla. Sırayla kelimeyle ilgili bir ipucu söyleyin, sonra birlikte sahtekârı bulun.</p>'+
 (S.min?'<div style="margin-top:22px"><div class="tm" id="tm">'+fm(S.min*60)+'</div><button class="big alt" style="margin-top:6px" onclick="tick()">Süreyi başlat</button></div>':'')+
-'<button class="big" onclick="rev()">Sahtekârı göster</button></div>')}
+'<button class="big" onclick="rev()">Sahtekârı göster</button></div>');if(T>Date.now())run()}
 function fm(s){return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
 function tick(){
-T=Date.now()+S.min*60000;clearInterval(S.tid);
+T=Date.now()+S.min*60000;run()}
+function run(){clearInterval(S.tid);
 S.tid=setInterval(function(){var e=document.getElementById('tm');if(!e)return clearInterval(S.tid);
 var r=Math.ceil((T-Date.now())/1000);
 if(r<=0){clearInterval(S.tid);e.textContent='Süre doldu';e.className='tm end';buz();setTimeout(buz,300)}else e.textContent=fm(r)},250)}
+function bk(){if(confirm('Oyundan çıkılsın mı? Tur kaybolur.')){T=0;setup()}}
 function rev(){
-$(B('setup()')+'<div class="center"><div class="who">Emin misin?</div><div class="name" style="font-size:34px">Herkes kararını verdi mi?</div><button class="big" onclick="rev2()">Evet, sahtekârı göster</button><button class="big alt" onclick="play()">Hayır, devam</button></div>')}
+$(B('bk()')+'<div class="center"><div class="who">Emin misin?</div><div class="name" style="font-size:34px">Herkes kararını verdi mi?</div><button class="big" onclick="rev2()">Evet, sahtekârı göster</button><button class="big alt" onclick="play()">Hayır, devam</button></div>')}
 function rev2(){
 var c=S.roles.length?S.roles.map(function(r){return '<span class="chip">Oyuncu '+(r+1)+'</span>'}).join(''):'<div class="name" style="font-size:36px;margin:0">Bu turda sahtekâr yoktu!</div>';
-$(B('setup()')+'<div class="center"><div class="who">Sahtekâr</div><div style="margin:10px 0 14px">'+c+'</div>'+
+$(B('bk()')+'<div class="center"><div class="who">Sahtekâr</div><div style="margin:10px 0 14px">'+c+'</div>'+
 (S.roles.length?'<p class="sub">Yakalandıysa son şansı var: kelimeyi tahmin etsin. Doğru bilirse kazanır.</p>':'')+
 '<button class="big" onclick="rev3()">Kelimeyi göster</button></div>')}
 function rev3(){
-$(B('setup()')+'<div class="center"><div class="card"><div class="k">Kelime ('+S.cat+')</div><div class="w">'+S.word[0]+'</div></div><button class="big" onclick="go()">Yeni tur</button><button class="big alt" onclick="setup()">Ayarlar</button></div>')}
+$(B('bk()')+'<div class="center"><div class="card"><div class="k">Kelime ('+S.cat+')</div><div class="w">'+S.word[0]+'</div></div><button class="big" onclick="go()">Yeni tur</button><button class="big alt" onclick="setup()">Ayarlar</button></div>')}
 
 /* ===== ONLINE MOD (Supabase Realtime, tablo gerekmez) ===== */
 var SB_URL="https://azpiwzrajmuiiznrcnud.supabase.co";   // <-- Supabase Project URL
@@ -219,7 +221,7 @@ function mk(){var n=gn();if(!n)return;if(!sbOk())return omenu('Online ayarı yap
 function jn(){var n=gn();if(!n)return;var c=document.getElementById('cd').value.trim().toUpperCase();if(c.length!=4)return omenu('4 haneli oda kodunu yaz.');if(!sbOk())return omenu('Online ayarı yapılmamış (SB_URL / SB_KEY).');O.name=n;O.id=rid();O.admin=false;O.code=c;conn()}
 function conn(){
 O.players=[];O.role=null;O.seen=false;O.state='conn';O.end=0;
-$(B('leave()')+'<div class="center"><div class="who">Bağlanıyor…</div></div>');
+$(B('lv()')+'<div class="center"><div class="who">Bağlanıyor…</div></div>');
 O.ch=O.sb.channel('sk-'+O.code,{config:{presence:{key:O.id},broadcast:{self:false}}});
 O.ch.on('presence',{event:'sync'},psync)
 .on('broadcast',{event:'start'},function(m){onStart(m.payload)})
@@ -243,7 +245,7 @@ if(O.state=='lobby')lobby(1)}
 function toLobby(){O.state='lobby';O.role=null;O.end=0;clearInterval(S.tid);theme();lobby()}
 function lobby(keep){
 var ps=O.players.slice().sort(function(a,b){return (b.admin-a.admin)||a.name.localeCompare(b.name)});
-var h=B('leave()')+'<div class="split"><div><div class="who">Oda kodu</div><div class="rc" onclick="cp()">'+O.code+'</div><div style="display:flex;gap:8px"><button class="mini" onclick="cp()">Kopyala</button><button class="mini" onclick="sh()">Paylaş</button></div>'+
+var h=B('lv()')+'<div class="split"><div><div class="who">Oda kodu</div><div class="rc" onclick="cp()">'+O.code+'</div><div style="display:flex;gap:8px"><button class="mini" onclick="cp()">Kopyala</button><button class="mini" onclick="sh()">Paylaş</button></div>'+
 '<h2>Oyuncular ('+ps.length+')</h2><div>'+ps.map(function(p){return '<span class="chip'+(p.id==O.id?' me':'')+'">'+(p.admin?'👑 ':'')+esc(p.name)+'</span>'}).join('')+'</div>';
 if(O.admin)h+='<h2>Ayarlar</h2>'+st('Sahtekâr sayısı','imp','')+st('Tartışma süresi','min','dk')+tg('Sahtekâra ipucu ver','Kategori ve esrarengiz bir ipucu görür','hint')+tg('Sürpriz tur','Bazen hiç sahtekâr olmaz','surp')+
 '</div><div>'+catBox()+'</div></div><button class="big go" onclick="ostart()">Oyunu başlat</button>';
@@ -276,16 +278,16 @@ c.subscribe(function(s){if(s=='SUBSCRIBED'){c.send({type:'broadcast',event:'role
 if(n<3)O.rt=setTimeout(function(){sendRoles(n+1)},2200)}
 function onStart(p){
 O.cat=p.cat;O.starter=p.starter;O.min=p.min;O.end=0;O.state='wait';theme(p.cat);
-if(O.role)opass();else $(B('leave()')+'<div class="center"><div style="font-size:64px">'+D[p.cat][0]+'</div><div class="who">Rolün geliyor…</div></div>')}
+if(O.role)opass();else $(B('lv()')+'<div class="center"><div style="font-size:64px">'+D[p.cat][0]+'</div><div class="who">Rolün geliyor…</div></div>')}
 function gotRole(pl){O.role=pl;if(!O.admin)O.ch.send({type:'broadcast',event:'got',payload:{id:O.id}});if(O.state=='wait')opass()}
 function opass(){O.state='pass';
-$(B('leave()')+'<div class="center"><div style="font-size:64px;line-height:1.1">'+D[O.cat][0]+'</div><div class="who">Hazır mısın?</div><div class="name" style="font-size:clamp(30px,10vw,48px)">'+esc(O.name)+'</div><p class="sub">Ekranını kimseye gösterme.</p><button class="big" onclick="oshow()">Kartımı göster</button></div>')}
+$(B('lv()')+'<div class="center"><div style="font-size:64px;line-height:1.1">'+D[O.cat][0]+'</div><div class="who">Hazır mısın?</div><div class="name" style="font-size:clamp(30px,10vw,48px)">'+esc(O.name)+'</div><p class="sub">Ekranını kimseye gösterme.</p><button class="big" onclick="oshow()">Kartımı göster</button></div>')}
 function oshow(){buz();var r=O.role,h;
 if(r.imp)h='<div class="card imp"><div class="k">Senin rolün</div><div class="w">SAHTEKÂR</div><div class="k">Kategori: '+r.cat+'</div>'+(r.hint?'<div class="hint">“'+esc(r.hint)+'”</div>':'')+'</div><p class="sub">Kelimeyi bilmiyorsun. Fark ettirme.</p>';
 else h='<div class="card"><div class="k">Kategori: '+r.cat+'</div><div class="w">'+esc(r.word)+'</div><div class="k">'+TH[r.cat][4]+'</div></div><p class="sub">Sahtekâra belli etmeden anlat.</p>';
-$(B('leave()')+'<div class="center">'+h+'<button class="big alt" onclick="oplay()">Gizle</button></div>')}
+$(B('lv()')+'<div class="center">'+h+'<button class="big alt" onclick="oplay()">Gizle</button></div>')}
 function oplay(){O.state='play';
-$(B('leave()')+'<div class="center"><div style="font-size:64px;line-height:1.1">'+D[O.cat][0]+'</div><div class="who">İlk başlayan</div><div class="name" style="font-size:clamp(30px,10vw,52px)">'+esc(O.starter)+'</div><p class="sub">Sırayla kelimeyle ilgili bir şey söyleyin, sonra birlikte sahtekârı bulun.</p>'+
+$(B('lv()')+'<div class="center"><div style="font-size:64px;line-height:1.1">'+D[O.cat][0]+'</div><div class="who">İlk başlayan</div><div class="name" style="font-size:clamp(30px,10vw,52px)">'+esc(O.starter)+'</div><p class="sub">Sırayla kelimeyle ilgili bir şey söyleyin, sonra birlikte sahtekârı bulun.</p>'+
 (O.min?'<div style="margin-top:20px"><div class="tm" id="tm">'+fm(O.min*60)+'</div>'+(O.admin?'<button class="big alt" style="margin-top:6px" onclick="otimer()">Süreyi başlat</button>':'')+'</div>':'')+
 '<button class="big alt" onclick="oshow()">Kartımı tekrar gör</button>'+(O.admin?'<button class="big" onclick="orev()">Sahtekârı göster</button>':'<p class="sub" style="margin-top:18px">Sahtekârı yönetici açıklayacak.</p>')+'</div>');
 if(O.end)runT()}
@@ -294,8 +296,9 @@ function runT(){clearInterval(S.tid);S.tid=setInterval(function(){var e=document
 function orev(){var R=O.round,n=R.ps.filter(function(p){return R.imps.indexOf(p.id)>-1}).map(function(p){return p.name}),pl={imps:n,word:R.word,cat:R.cat};O.ch.send({type:'broadcast',event:'reveal',payload:pl});onReveal(pl)}
 function onReveal(p){O.state='reveal';clearInterval(S.tid);
 var c=p.imps.length?p.imps.map(function(n){return '<span class="chip">'+esc(n)+'</span>'}).join(''):'<div class="name" style="font-size:34px;margin:0">Bu turda sahtekâr yoktu!</div>';
-$(B('leave()')+'<div class="center"><div class="who">Sahtekâr</div><div style="margin:10px 0 14px">'+c+'</div><div class="card"><div class="k">Kelime ('+esc(p.cat)+')</div><div class="w">'+esc(p.word)+'</div></div>'+(O.admin?'<button class="big" onclick="onext()">Yeni tur</button>':'<p class="sub">Yönetici yeni tur başlatacak.</p>')+'</div>')}
+$(B('lv()')+'<div class="center"><div class="who">Sahtekâr</div><div style="margin:10px 0 14px">'+c+'</div><div class="card"><div class="k">Kelime ('+esc(p.cat)+')</div><div class="w">'+esc(p.word)+'</div></div>'+(O.admin?'<button class="big" onclick="onext()">Yeni tur</button>':'<p class="sub">Yönetici yeni tur başlatacak.</p>')+'</div>')}
 function onext(){O.ch.send({type:'broadcast',event:'lobby',payload:{}});toLobby()}
+function lv(){if(O.state&&O.state!='lobby'&&O.state!='conn'&&!confirm('Odadan çıkılsın mı?'))return;leave()}
 function leave(go){
 clearTimeout(O.tm);clearTimeout(O.rt);clearInterval(S.tid);
 try{if(O.ch)O.sb.removeChannel(O.ch);if(O.priv)O.sb.removeChannel(O.priv)}catch(e){}
