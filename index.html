@@ -5,14 +5,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sahtekâr</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Fredoka:wght@700&family=Baloo+2:wght@800&family=Playfair+Display:wght@800&family=Archivo+Black&family=Space+Grotesk:wght@700&family=Anton&family=Lilita+One&family=Fraunces:wght@700&family=Chakra+Petch:wght@700&family=Righteous&family=Patrick+Hand&family=Barlow+Condensed:wght@700&family=Cinzel:wght@800&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#1a1330">
+<meta name="description" content="Sahtekâr: kelimeyi bilmeyeni bul. Tek telefon ya da online odayla arkadaşlarınla oyna.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%95%B5%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Fredoka:wght@700&family=Baloo+2:wght@800&family=Playfair+Display:wght@800&family=Archivo+Black&family=Space+Grotesk:wght@700&family=Anton&family=Barlow+Condensed:wght@700&family=Fraunces:wght@700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#1a1330;--bg2:#271d47;--card:#f4efff;--ink:#1a1330;--mut:#a89cc8;--acc:#ff6b3d;--ok:#35e0b8;--line:#3a2d63;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
 html{overflow-anchor:none}html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:radial-gradient(120% 60% at 50% 0%,#3b2a73 0%,var(--bg) 60%);background-color:var(--bg);color:#fff;font-family:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;min-height:100vh}
-#app{max-width:480px;margin:0 auto;padding:22px 18px 40px}
+#app{max-width:1040px;margin:0 auto;padding:22px 18px 40px}
+.narrow{max-width:520px;margin:0 auto}
+.split{display:block}
 h1{font-size:44px;line-height:1;margin:6px 0 4px;font-weight:800;letter-spacing:-1.5px}
 h2{font-size:15px;margin:26px 0 10px;color:var(--mut);font-weight:700;display:flex;justify-content:space-between;align-items:center}
 h2 span button{background:var(--bg2);border:1.5px solid var(--line);color:#fff;border-radius:20px;padding:5px 12px;font:700 13px inherit;font-family:inherit;margin-left:6px}
@@ -70,6 +75,26 @@ p.sub{margin:0;color:var(--mut);font-size:15px}
 .mode.b i{background:var(--ok)}.mode b{display:block;font-size:22px;margin-bottom:2px}.mode span{color:var(--mut);font-size:14px;font-weight:500;line-height:1.3}
 .how{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:26px;text-align:center}
 .how div{background:rgba(255,255,255,.06);border-radius:16px;padding:12px 6px;font-size:13px;color:var(--mut);font-weight:700}.how i{display:block;font-style:normal;font-size:26px;margin-bottom:4px}
+.cat b{font-size:16px;line-height:1.15}.cat small{color:var(--mut);font-weight:500;font-size:12px}.cat.on small{color:#6b5d94}
+.cnt{font-style:normal;color:var(--mut);font-size:13px;margin-right:4px}
+.go{max-width:520px;margin-left:auto;margin-right:auto}
+:focus-visible{outline:3px solid #fff;outline-offset:2px}
+button{cursor:pointer}
+@media(min-width:560px) and (max-width:859px){.cats{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:860px){
+#app{padding:40px 28px 56px}
+.split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;align-items:start}
+.cats{grid-template-columns:repeat(3,1fr)}
+.split h2:first-child{margin-top:8px}
+.cat{padding:14px 12px}
+h1{font-size:56px}
+.card{padding:46px 28px}
+}
+@media(hover:hover){
+.cat:hover{transform:translateY(-2px);border-color:var(--c)}
+.big:hover,.mode:hover,.mini:hover,.back:hover,.step button:hover{filter:brightness(1.12)}
+}
+@media(max-height:520px) and (orientation:landscape){.center,.hm{min-height:auto;padding:12px 0}.logo{width:72px;height:72px;font-size:40px;margin-bottom:8px}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 </head>
@@ -77,54 +102,45 @@ p.sub{margin:0;color:var(--mut);font-size:15px}
 <div id="deco"></div><div id="app"></div>
 <script>
 var D={
-"Yiyecek":["🍕","Pizza|0 3 4 5/Lahmacun|0 3 4/Baklava|2 5/Mantı|0 3 5/Simit|3 4/Karpuz|1 2 4 5/Hamburger|0 3 4/Dondurma|1 2 4/Menemen|0 3 5/Çikolata|2 5","#ff8a3d,#5a2a12,#25100a"],
-"Hayvanlar":["🦁","Aslan|0 5/Penguen|5 3/Zürafa|4 5 3/Kedi|0 2/Fil|5 3 4/Yunus|5 0/Kartal|0 1/Kaplumbağa|3 2/Maymun|5 4/Karınca|5 3","#8bd450,#2d4a1a,#12200a"],
-"Yerler":["🌍","İstanbul|2 3 4 5/Paris|2 3 5/Japonya|2 4 5 3/Brezilya|0 4 2/Mısır|0 3/İtalya|3 4 2 0/Antalya|0 4 2/New York|2 5 4/Kapadokya|3 0/Venedik|3 4 2","#3db8ff,#143d66,#0a1a30"],
-"Meslekler":["🧑‍🍳","Doktor|0 1 2 5/Pilot|0 1 5/Aşçı|0 2 3/Öğretmen|4 3/Polis|0 1 5/İtfaiyeci|0 5 2/Berber|2 3/Avukat|0 3 4/Futbolcu|0 3 5/Garson|0 1 3","#ffc83d,#5a4412,#241a08"],
-"Eşyalar":["🔑","Telefon|2 4 1 5/Buzdolabı|3 4 0/Şemsiye|2 0 5/Gözlük|1 2 5/Saat|0 2 4 5/Anahtar|0 2 5/Makas|0 3/Ayna|1 3/Yastık|3 5/Mum|3 1","#c58bff,#44286b,#1a1030"],
-"Spor":["⚽","Futbol|0 1/Basketbol|0 1 4/Yüzme|2 5/Tenis|0 4 5/Voleybol|0 1/Boks|5 4/Satranç|4 1/Kayak|3 5/Okçuluk|4 5/Golf|0 4 5","#ff4d6d,#5c1426,#25080f"],
-"Eğlence":["🎉","Sinema|0 3 4/Konser|0 1 3/Piknik|2 4/Doğum günü|3 4 5/Düğün|0 1 3 4 5/Kamp|0 2/Tatil|2 4/Karaoke|0 1/Lunapark|2 3 0/Tiyatro|0 3","#ff5fd2,#5c1a55,#240a22"],
-"Doğa":["🌋","Deniz|2 1/Dağ|4 0 3/Orman|3 5/Çöl|1 5/Yanardağ|1 4/Şelale|2 3 4/Gökkuşağı|2 4/Ay|5 4/Kar|0 4 2/Fırtına|2 5 0","#35e0b8,#0f4a40,#06201c"],
-"Teknoloji":["🤖","İnternet|0 3 1/Robot|2 1/Klavye|0 1/Şarj aleti|0 2 4/Bluetooth|3 5 4 2/Drone|2 4 1/Wi-Fi|3 1/Kulaklık|0 5 4 2/Uydu|3 2/Bilgisayar|0 1 3","#4df0ff,#12385a,#081624"],
-"Müzik":["🎸","Gitar|0 3 5/Piyano|0 2 3/Davul|2 3/Keman|0 4/Saz|0 5/Orkestra|3 4 1 0/Mikrofon|3 5/Nota|5 4/Flüt|1 5/Plak|5 4","#b6a0ff,#2f2a6b,#12102c"],
-"Okul":["🎒","Defter|0 3/Kalem|0 3/Tahta|0 2/Zil|1 4/Sınav|0 2 3 5/Karne|3 5/Kantin|1 4/Sıra|4 2/Harita|3 0/Ödev|0 3 5","#5f8bff,#1d3270,#0c1430"],
-"Ulaşım":["🚆","Uçak|1 3 5 4/Tren|0 3 5 4/Gemi|2 3 5 4/Otobüs|3 5 4/Metro|0 3 5/Taksi|4 5/Helikopter|1 4/Tramvay|0 3 5 4/Balon|1 5/Vapur|2 3 5 4","#8fa3c7,#2a3752,#10161f"],
-"Fantastik":["🐉","Ejderha|0 3 5 2/Cadı|1 2 3/Peri|2 3/Hayalet|1 2/Vampir|1 2/Cin|2 5/Dev|4 5/Kral|4 5/Şövalye|4 0/Hazine|5 4","#d36bff,#4a1d6b,#190a28"]
+"Yiyecek":["🍕","Pizza|0 1 2 3/Lahmacun|0 1 4/Pide|0 1 4 3/Mantı|1 4 5 6/Makarna|1 2 5 6/Tiramisu|7 2 8/Baklava|7 1 9 0/Künefe|7 5 10/Sütlaç|7 0 8 9/Dondurma|7 8 11 12/Çikolata|7 12 13 9/Simit|1 0 14 15/Poğaça|1 0 15 10/Börek|1 0 10 15/Menemen|15 5 16 6/Döner|4 14 5 17/Hamburger|4 14 17/Kebap|4 5 3/Köfte|4 5 6 17/Çorba|5 13 6/Karpuz|18 11 8 19/Elma|18 19 13/Muz|18 20 21 15/Limon|18 20 21/Mısır|16 20 14 11/Çay|22 5 15 23/Türk Kahvesi|22 5 24 23/Ayran|22 8 24 11","#ff8a3d,#5a2a12,#25100a"],
+"Hayvanlar":["🦁","Aslan|0 1 2/Kaplan|0 3 4/Zebra|3 2 1 5/Zürafa|2 5 1/Fil|2 5 6 4/Kurt|0 1 7 8/Ayı|0 8 6/Tilki|0 8 7 9/Kedi|10 7 9 11/Köpek|10 11 1 7/At|10 5 1 12/Tavşan|10 9 5 12/Penguen|13 14 1 15/Kartal|13 0 16/Baykuş|7 0 8 16/Papağan|13 10 17 18/Yunus|15 19 1 12/Köpekbalığı|15 0 6 12/Balina|15 6 14 1/Kaplumbağa|20 15 21 10/Salyangoz|20 9 21 7/Karınca|9 1 8 20/Arı|9 1 16 22/Kelebek|9 16 22 18/Maymun|8 17 19/Panda|4 5 8 11/Deve|5 4 2 20","#8bd450,#2d4a1a,#12200a"],
+"Şehirler":["🌍","İstanbul|0 1 2 3/Ankara|0 4 5 3/İzmir|0 1 3 6/Antalya|0 1 6 7/Bursa|0 2 5 8/Trabzon|0 1 8 9/Kapadokya|0 7 2 5/Paris|10 4 7 3/Roma|10 4 2 7/Venedik|10 1 2 7/Londra|10 4 3 9/Amsterdam|10 4 7 9/Barselona|10 1 7 6/Moskova|10 4 5 3/İzlanda|10 11 5 8/New York|12 3 1 7/Rio de Janeiro|12 1 6 7/Tokyo|13 4 3 14/Dubai|13 15 14 7/Bali|13 11 6 7/Maldivler|13 11 1 7/Kahire|4 15 2/Sydney|1 6 7 14","#3db8ff,#143d66,#0a1a30"],
+"Meslekler":["🧑‍🍳","Doktor|0 1 2 3/Hemşire|0 1 2 4/Eczacı|1 5 6 0/Pilot|7 4 2 8/Hostes|7 4 8 6/Polis|4 2 9 10/İtfaiyeci|4 9 3 2/Aşçı|11 1 6/Garson|11 6 2 10/Berber|5 6 3 10/Öğretmen|10 6 12/Avukat|13 14 15 6/Hakim|13 15 14 10/Mimar|14 16 17 18/Yazılımcı|14 17 2 16/Ressam|16 18 3 12/Şarkıcı|19 16 2 10/Oyuncu|19 16 17 10/Çiftçi|18 3 12 9/Balıkçı|18 3 12 9/Astronot|7 9 4 1/Gazeteci|14 17 9 8","#ffc83d,#5a4412,#241a08"],
+"Eşyalar":["🔑","Telefon|0 1 2 3/Anahtar|0 4 5/Cüzdan|0 3 5 6/Gözlük|7 3 5 8/Saat|9 3 5 4/Şemsiye|10 4 3/Ayna|7 11 12 8/Diş fırçası|12 8 3 13/Havlu|12 10 11 8/Yastık|14 10 11 15/Battaniye|14 10 15/Buzdolabı|16 1 17 11/Çaydanlık|16 4 18 11/Ütü|1 18 11 10/Makas|19 4 5 20/Bıçak|19 4 16 3/Kalem|20 6 5 3/Defter|20 6 3 9/Çanta|20 10 3 17/Silgi|20 5 13 3/Şarj aleti|1 5 3 13/Kulaklık|1 5 0 3/Televizyon|1 2 11 17/Bilgisayar|1 2 17 3/Mum|21 15 11 5/Lamba|21 1 11 7/Fener|21 15 1 5","#c58bff,#44286b,#1a1030"],
+"Sporlar":["🏀","Futbol|0 1 2 3/Basketbol|0 1 4 3/Voleybol|0 1 5 4/Hentbol|0 1 4 3/Rugby|0 1 2 6/Beyzbol|0 1 2 7/Su topu|1 3 8 6/Buz hokeyi|9 1 10 4/Tenis|0 11 5 12/Masa tenisi|0 11 5 4/Badminton|11 5 4 12/Golf|0 12 2 13/Bilardo|0 4 14 12/Satranç|14 12 4/Yüzme|15 12 3 8/Dalış|15 12 3 13/Kayak|9 12 10 2/Snowboard|9 12 10 2/Boks|16 7 12 6/Güreş|16 12 3 6/Judo|12 3 4 8/Halter|12 3 4 6/Okçuluk|13 12 3 2/Eskrim|12 3 4 10/Bisiklet|12 10 2 8/Atletizm|12 10 3 8/Maraton|12 8 2 3/Tırmanış|12 2 8 6","#ff4d6d,#5c1426,#25080f"],
+"Futbolcular":["⚽","Lionel Messi|0 1 2 3/Cristiano Ronaldo|4 5 6 7/Neymar|8 1 9 3/Pelé|8 10 1 11/Ronaldinho|8 1 9 3/Maradona|0 10 1 2/Zidane|12 13 5 14/Mbappé|12 4 5 11/Thierry Henry|12 4 7 11/Haaland|4 7 15/Lewandowski|4 15 3 6/Modrić|13 5 6 16/De Bruyne|13 7 15 17/Salah|7 4 2 6/Zlatan|4 7 3/Buffon|18 10 6 11/Neuer|18 15 6 11/Iniesta|19 13 3 17/Xavi|19 13 3 14/Cruyff|10 3 14 16/Beckham|20 13 21 6/Rooney|20 4 7 6/Hakan Şükür|22 4 23 10/Arda Turan|22 13 23 3/Burak Yılmaz|22 4 6/Hakan Çalhanoğlu|22 13 21 15/Arda Güler|22 13 5 2/Rüştü Reçber|22 18 24 3/Metin Oktay|22 4 23 10/Alex de Souza|8 1 24 21/Mesut Özil|13 17 15 11","#3ddc84,#14502a,#08200f"],
+"Doğa":["🌋","Deniz|0 1 2 3/Göl|0 1 4 2/Nehir|0 5 4 3/Şelale|0 6 5 7/Gökyüzü|1 6 8 3/Dağ|6 9 10 4/Orman|5 4 11 12/Çöl|13 4 3 2/Yanardağ|13 6 14 7/Gökkuşağı|15 11 2/Ay|15 12 4 9/Güneş|15 8 13 2/Kar|9 10 16 4/Bulut|15 16 11 6/Şimşek|15 11 7 14/Fırtına|11 7 14 10/Mağara|4 9 14 12/Buzul|9 16 6 4/Vadi|5 4 6 8/Ada|0 2 4 5","#35e0b8,#0f4a40,#06201c"]
 };
-var G={"Yiyecek":"Sıcak,Soğuk,Tatlı,Tuzlu,Yuvarlak,Paylaşılan","Hayvanlar":"Yırtıcı,Kanatlı,Evcil,Yavaş,Uzun,Sürü","Yerler":"Sıcak,Soğuk,Kalabalık,Tarihî,Deniz,Modern","Meslekler":"Üniforma,Gece,Alet,Kalabalık,Okul,Risk","Eşyalar":"Metal,Cam,Cepte,Evde,Elektrik,Günlük","Spor":"Top,Takım,Su,Kış,Hedef,Ekipman","Eğlence":"Gece,Müzik,Açık hava,Kalabalık,Yemek,Kutlama","Doğa":"Soğuk,Sıcak,Su,Yeşil,Yüksek,Gece","Teknoloji":"Kablo,Ekran,Pil,Ağ,Taşınabilir,Ses","Müzik":"Tel,Üfleme,Vurmalı,Sahne,Kalabalık,Ses","Okul":"Yazı,Teneffüs,Sessiz,Kâğıt,Sıra,Stres","Ulaşım":"Ray,Hava,Su,Kalabalık,Sürücü,Bilet","Fantastik":"Ateş,Gece,Büyü,Uçan,Taç,Hazine"};
+var G={"Yiyecek":"Fırın,Hamur,İtalyan,Paylaşılan,Et,Sıcak,Evde,Tatlı,Soğuk,Bayram,Peynir,Yaz,Süt,Kış,Sokak,Kahvaltı,Sebze,Ekmek,Meyve,Çekirdek,Sarı,Kabuk,İçecek,Misafir,Köpük","Hayvanlar":"Yırtıcı,Sürü,Afrika,Çizgili,Asya,Otçul,Dev,Gece,Orman,Küçük,Evcil,Tüylü,Hızlı,Kuş,Soğuk,Su,Uçan,Tropik,Renkli,Zeki,Yavaş,Kabuk,Çiçek","Şehirler":"Türkiye,Sahil,Tarihî,Kalabalık,Başkent,Kış,Yaz,Turizm,Dağlık,Yağmur,Avrupa,Ada,Amerika,Asya,Modern,Çöl","Meslekler":"Hastane,Beyaz,Gece,Alet,Üniforma,Dükkan,Hizmet,Gökyüzü,Seyahat,Risk,Kalabalık,Mutfak,Sabah,Mahkeme,Ofis,Siyah,Yaratıcı,Ekran,Açık hava,Sahne","Eşyalar":"Cepte,Elektrik,Ekran,Günlük,Metal,Küçük,Kâğıt,Cam,Sabah,Zaman,Kumaş,Evde,Banyo,Plastik,Yatak,Gece,Mutfak,Büyük,Sıcak,Kesici,Okul,Işık","Sporlar":"Top,Takım,Açık hava,Olimpiyat,Salon,Ağ,Güç,Eldiven,Dayanıklılık,Kış,Hız,Raket,Bireysel,Hedef,Zeka,Su,Ring","Futbolcular":"Arjantinli,On numara,Sol ayak,Barselona,Golcü,Real Madrid,Kaptan,Premier Lig,Brezilyalı,Dribling,Efsane,Dünya Kupası şampiyonu,Fransız,Orta saha,Teknik direktör,Bundesliga,Altın Top,Asist,Kaleci,İspanyol,İngiliz,Serbest vuruş,Türk,Galatasaray,Fenerbahçe","Doğa":"Su,Mavi,Yaz,Geniş,Sessiz,Yeşil,Yüksek,Güçlü,Gündüz,Soğuk,Kış,Yağmur,Gece,Sıcak,Tehlikeli,Gökyüzü,Beyaz"};
 function hintFor(k,w){var L=D[k][1].split('/').map(function(e){var x=e.split('|');return[x[0],x[1].split(' ')]}),T=G[k].split(','),me=L.filter(function(e){return e[0]==w})[0][1],c={};
 L.forEach(function(e){if(e[0]!=w)e[1].forEach(function(t){c[t]=(c[t]||0)+1})});
-var ws=me.map(function(t){var n=(c[t]||0)+.5;return n*n*n}),sum=ws.reduce(function(a,b){return a+b},0),r=Math.random()*sum,i=0;
+var ws=me.map(function(t){var n=(c[t]||0)+.5;return Math.pow(n,1.4)}),sum=ws.reduce(function(a,b){return a+b},0),r=Math.random()*sum,i=0;
 while(i<ws.length-1&&r>ws[i]){r-=ws[i];i++}return T[me[i]]}
 var TH={
-"Yiyecek":["🍕 🍔 🍩 🍉 🥐 🍝","Fredoka",700,44,"Bu turun menüsü"],
-"Hayvanlar":["🦁 🐧 🐘 🦒 🐢 🦉","Baloo 2",800,36,"Bu turun yaratığı"],
-"Yerler":["🗼 🗽 🏰 🧭 🌐 🗺","Playfair Display",800,16,"Bu turun durağı"],
-"Meslekler":["🩺 🔧 🚒 🎨 ✏ 🧰","Archivo Black",400,10,"Bu turun mesleği"],
-"Eşyalar":["🔑 🕯 🕶 🎒 🧲 🔔","Space Grotesk",700,24,"Bu turun eşyası"],
-"Spor":["⚽ 🏀 🎾 🥊 🏐 🥇","Anton",400,6,"Bu turun maçı"],
-"Eğlence":["🎈 🎉 🎡 🎤 🍿 🎆","Lilita One",400,40,"Bu turun partisi"],
-"Doğa":["🌲 🌋 🌊 🌙 🍄 🌈","Fraunces",700,30,"Bu turun manzarası"],
-"Teknoloji":["🤖 💾 📡 🔋 🛰 🎧","Chakra Petch",700,4,"Bu turun cihazı"],
-"Müzik":["🎸 🎹 🥁 🎻 🎺 🎵","Righteous",400,32,"Bu turun melodisi"],
-"Okul":["📚 📐 🎒 🔔 🧮 📏","Patrick Hand",400,14,"Bu turun dersi"],
-"Ulaşım":["🚆 🚲 🚢 🚌 🚁 🛵","Barlow Condensed",700,8,"Bu turun yolculuğu"],
-"Fantastik":["🐉 🏰 🧙 🗡 🔮 👑","Cinzel",800,20,"Bu turun efsanesi"]
+"Yiyecek":["🍕 🍔 🍩 🍉 🥐 🍝", "Fredoka", 700, 44, "Bu turun menüsü"],
+"Hayvanlar":["🦁 🐧 🐘 🦒 🐢 🦉", "Baloo 2", 800, 36, "Bu turun yaratığı"],
+"Şehirler":["🗼 🗽 🏰 🧭 🌐 🗺", "Playfair Display", 800, 16, "Bu turun durağı"],
+"Meslekler":["🩺 🔧 🚒 🎨 ✏ 🧰", "Archivo Black", 400, 10, "Bu turun mesleği"],
+"Eşyalar":["🔑 🕯 🕶 🎒 🧲 🔔", "Space Grotesk", 700, 24, "Bu turun eşyası"],
+"Sporlar":["🏀 🎾 🥊 🏐 🏊 🥇", "Anton", 400, 6, "Bu turun sporu"],
+"Futbolcular":["⚽ 🥅 👟 🏆 🧤 🟨", "Barlow Condensed", 700, 12, "Bu turun yıldızı"],
+"Doğa":["🌲 🌋 🌊 🌙 🍄 🌈", "Fraunces", 700, 30, "Bu turun manzarası"]
 };
 function deco(es){var d=document.getElementById('deco');d.innerHTML='';if(!es)return;var a=es.split(' ');for(var i=0;i<18;i++){var p=document.createElement('span');p.textContent=a[i%a.length];p.style.cssText='left:'+(i%3*34+Math.random()*20-4)+'%;top:'+(Math.floor(i/3)*17+Math.random()*10)+'%;font-size:'+(36+Math.random()*40)+'px;transform:rotate('+(Math.random()*60-30)+'deg);animation-delay:-'+Math.random()*8+'s';d.appendChild(p)}}
 var K=Object.keys(D);
-var S={n:5,imp:1,min:3,cats:{"Yiyecek":1,"Hayvanlar":1,"Yerler":1},hint:true,surp:false,roles:[],word:null,cat:"",i:0,start:0,used:{},err:"",tid:0};
+var S={n:5,imp:1,min:3,cats:{},hint:true,surp:false,roles:[],word:null,cat:"",i:0,start:0,used:{},err:"",tid:0};
+K.forEach(function(k){S.cats[k]=1});
 var app=document.getElementById('app');
-var KEEP=0;function $(h){clearInterval(S.tid);var y=window.scrollY;app.innerHTML=h;window.scrollTo(0,KEEP?y:0);KEEP=0}
+var KEEP=0;function $(h,wide){clearInterval(S.tid);var y=window.scrollY;app.innerHTML=wide?h:'<div class="narrow">'+h+'</div>';window.scrollTo(0,KEEP?y:0);KEEP=0}
 function theme(k){var r=document.documentElement.style,b=document.body.style;['--acc','--f','--fw','--r'].forEach(function(p){r.removeProperty(p)});b.background='';deco('');if(!k)return;var t=D[k][2].split(','),h=TH[k];r.setProperty('--acc',t[0]);r.setProperty('--f',"'"+h[1]+"'");r.setProperty('--fw',h[2]);r.setProperty('--r',h[3]+'px');b.background='radial-gradient(120% 60% at 50% 0%,'+t[1]+' 0%,'+t[2]+' 65%)';b.backgroundColor=t[2];deco(h[0])}
 function buz(){try{navigator.vibrate&&navigator.vibrate(60)}catch(e){}}
+function catGrid(){return K.map(function(k){var n=D[k][1].split('/').length;return '<button class="cat'+(S.cats[k]?' on':'')+'" style="--c:'+D[k][2].split(',')[0]+'" onclick="tc(\''+k+'\')"><i>'+D[k][0]+'</i><b>'+k+'</b><small>'+n+' kelime</small></button>'}).join('')}
+function catBox(){var c=Object.keys(S.cats).length;return '<h2>Kategoriler <span><em class="cnt">'+c+'/'+K.length+'</em><button onclick="all(1)">Hepsi</button><button onclick="all(0)">Temizle</button></span></h2><div class="cats">'+catGrid()+'</div><div class="err">'+S.err+'</div>'}
 function setup(keep){S.mode='local';theme();KEEP=keep?1:0;
-var c=K.map(function(k){return '<button class="cat'+(S.cats[k]?' on':'')+'" style="--c:'+D[k][2].split(',')[0]+'" onclick="tc(\''+k+'\')"><i>'+D[k][0]+'</i>'+k+'</button>'}).join('');
 $(B('home()')+'<h1>Sahtekâr</h1><p class="sub">Telefon elden ele dolaşır. Biri hariç herkes kelimeyi bilir.</p>'+
-'<h2>Oyun</h2>'+st('Oyuncu sayısı','n','')+st('Sahtekâr sayısı','imp','')+st('Tartışma süresi','min','dk')+
-tg('Sahtekâra ipucu ver','Kategori ve esrarengiz bir ipucu görür','hint')+tg('Sürpriz tur','Bazen hiç sahtekâr olmaz','surp')+
-'<h2>Kategoriler <span><button onclick="all(1)">Hepsi</button><button onclick="all(0)">Temizle</button></span></h2><div class="cats">'+c+'</div><div class="err">'+S.err+'</div>'+
-'<button class="big" onclick="go()">Oyunu başlat</button>')}
+'<div class="split"><div><h2>Oyun</h2>'+st('Oyuncu sayısı','n','')+st('Sahtekâr sayısı','imp','')+st('Tartışma süresi','min','dk')+
+tg('Sahtekâra ipucu ver','Kategori ve esrarengiz bir ipucu görür','hint')+tg('Sürpriz tur','Bazen hiç sahtekâr olmaz','surp')+'</div>'+
+'<div>'+catBox()+'</div></div><button class="big go" onclick="go()">Oyunu başlat</button>',1)}
 function st(t,k,u){return '<div class="row"><b>'+t+'</b><div class="step"><button onclick="ch(\''+k+'\',-1)">−</button><span>'+(k=='min'&&!S.min?'Kapalı':S[k]+(u?' '+u:''))+'</span><button onclick="ch(\''+k+'\',1)">+</button></div></div>'}
 function tg(t,s,k){return '<div class="row"><b>'+t+'<small>'+s+'</small></b><button class="tog'+(S[k]?' on':'')+'" onclick="S.'+k+'=!S.'+k+';rr()" aria-label="'+t+'"></button></div>'}
 function ch(k,d){var v=S[k]+d;
@@ -227,12 +243,12 @@ if(O.state=='lobby')lobby(1)}
 function toLobby(){O.state='lobby';O.role=null;O.end=0;clearInterval(S.tid);theme();lobby()}
 function lobby(keep){
 var ps=O.players.slice().sort(function(a,b){return (b.admin-a.admin)||a.name.localeCompare(b.name)});
-var h=B('leave()')+'<div class="who">Oda kodu</div><div class="rc" onclick="cp()">'+O.code+'</div><div style="display:flex;gap:8px"><button class="mini" onclick="cp()">Kopyala</button><button class="mini" onclick="sh()">Paylaş</button></div>'+
+var h=B('leave()')+'<div class="split"><div><div class="who">Oda kodu</div><div class="rc" onclick="cp()">'+O.code+'</div><div style="display:flex;gap:8px"><button class="mini" onclick="cp()">Kopyala</button><button class="mini" onclick="sh()">Paylaş</button></div>'+
 '<h2>Oyuncular ('+ps.length+')</h2><div>'+ps.map(function(p){return '<span class="chip'+(p.id==O.id?' me':'')+'">'+(p.admin?'👑 ':'')+esc(p.name)+'</span>'}).join('')+'</div>';
 if(O.admin)h+='<h2>Ayarlar</h2>'+st('Sahtekâr sayısı','imp','')+st('Tartışma süresi','min','dk')+tg('Sahtekâra ipucu ver','Kategori ve esrarengiz bir ipucu görür','hint')+tg('Sürpriz tur','Bazen hiç sahtekâr olmaz','surp')+
-'<h2>Kategoriler <span><button onclick="all(1)">Hepsi</button><button onclick="all(0)">Temizle</button></span></h2><div class="cats">'+ct()+'</div><div class="err">'+S.err+'</div><button class="big" onclick="ostart()">Oyunu başlat</button>';
-else h+='<p class="sub" style="margin-top:22px">Yönetici oyunu başlatınca kartın gelecek.</p>';
-KEEP=keep?1:0;$(h)}
+'</div><div>'+catBox()+'</div></div><button class="big go" onclick="ostart()">Oyunu başlat</button>';
+else h+='<p class="sub" style="margin-top:22px">Yönetici oyunu başlatınca kartın gelecek.</p></div><div></div></div>';
+KEEP=keep?1:0;$(h,1)}
 function cp(){try{navigator.clipboard.writeText(O.code)}catch(e){}}
 function sh(){var u=location.origin+location.pathname+'?oda='+O.code;try{if(navigator.share){navigator.share({title:'Sahtekâr',text:'Odaya katıl: '+O.code,url:u});return}navigator.clipboard.writeText(u)}catch(e){}}
 function ostart(){
