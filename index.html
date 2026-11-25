@@ -128,24 +128,25 @@ var TH={
 };
 function deco(es){var d=document.getElementById('deco');d.innerHTML='';if(!es)return;var a=es.split(' ');for(var i=0;i<18;i++){var p=document.createElement('span');p.textContent=a[i%a.length];p.style.cssText='left:'+(i%3*34+Math.random()*20-4)+'%;top:'+(Math.floor(i/3)*17+Math.random()*10)+'%;font-size:'+(36+Math.random()*40)+'px;transform:rotate('+(Math.random()*60-30)+'deg);animation-delay:-'+Math.random()*8+'s';d.appendChild(p)}}
 var K=Object.keys(D);
-var S={n:5,imp:1,min:3,cats:{},hint:true,surp:false,roles:[],word:null,cat:"",i:0,start:0,used:{},err:"",tid:0};
+var S={n:5,imp:1,min:3,cats:{},hint:true,surp:false,roles:[],word:null,cat:"",i:0,start:0,used:{},err:"",tid:0,snd:true,sc:null};
 K.forEach(function(k){S.cats[k]=1});
 var app=document.getElementById('app');
 var KEEP=0;function $(h,wide){clearInterval(S.tid);var y=window.scrollY;app.innerHTML=wide?h:'<div class="narrow">'+h+'</div>';window.scrollTo(0,KEEP?y:0);KEEP=0}
 function theme(k){var r=document.documentElement.style,b=document.body.style;['--acc','--f','--fw','--r'].forEach(function(p){r.removeProperty(p)});b.background='';deco('');if(!k)return;var t=D[k][2].split(','),h=TH[k];r.setProperty('--acc',t[0]);r.setProperty('--f',"'"+h[1]+"'");r.setProperty('--fw',h[2]);r.setProperty('--r',h[3]+'px');b.background='radial-gradient(120% 60% at 50% 0%,'+t[1]+' 0%,'+t[2]+' 65%)';b.backgroundColor=t[2];deco(h[0])}
-function buz(){try{navigator.vibrate&&navigator.vibrate(60)}catch(e){}}
+function beep(f,d){try{var c=window.AC||(window.AC=new (window.AudioContext||window.webkitAudioContext)()),o=c.createOscillator(),g=c.createGain();o.frequency.value=f;o.type='sine';g.gain.value=.12;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+d)}catch(e){}}
+function buz(k){if(!S.snd)return;try{navigator.vibrate&&navigator.vibrate(k==2?[200,100,200]:60)}catch(e){}beep(k==2?660:440,k==2?.5:.12);if(k==2)setTimeout(function(){beep(880,.5)},350)}
 function catGrid(){return K.map(function(k){var n=D[k][1].split('/').length;return '<button class="cat'+(S.cats[k]?' on':'')+'" style="--c:'+D[k][2].split(',')[0]+'" onclick="tc(\''+k+'\')"><i>'+D[k][0]+'</i><b>'+k+'</b><small>'+n+' kelime</small></button>'}).join('')}
 function catBox(){var c=Object.keys(S.cats).length;return '<h2>Kategoriler <span><em class="cnt">'+c+'/'+K.length+'</em><button onclick="selAll(1)">Hepsi</button><button onclick="selAll(0)">Temizle</button></span></h2><div class="cats">'+catGrid()+'</div><div class="err">'+S.err+'</div>'}
 function setup(keep){S.mode='local';theme();KEEP=keep?1:0;
 $(B('home()')+'<h1>Sahtekâr</h1><p class="sub">Telefon elden ele dolaşır. Biri hariç herkes kelimeyi bilir.</p>'+
 '<div class="split"><div><h2>Oyun</h2>'+st('Oyuncu sayısı','n','')+st('Sahtekâr sayısı','imp','')+st('Tartışma süresi','min','dk')+
-tg('Sahtekâra ipucu ver','Kategori ve esrarengiz bir ipucu görür','hint')+tg('Sürpriz tur','Bazen hiç sahtekâr olmaz','surp')+'</div>'+
+tg('Sahtekâra ipucu ver','Kategori ve esrarengiz bir ipucu görür','hint')+tg('Sürpriz tur','Bazen hiç sahtekâr olmaz','surp')+tg('Ses ve titreşim','Kart ve süre bitiminde','snd')+'</div>'+
 '<div>'+catBox()+'</div></div><button class="big go" onclick="go()">Oyunu başlat</button>',1)}
 function st(t,k,u){return '<div class="row"><b>'+t+'</b><div class="step"><button onclick="ch(\''+k+'\',-1)">−</button><span>'+(k=='min'&&!S.min?'Kapalı':S[k]+(u?' '+u:''))+'</span><button onclick="ch(\''+k+'\',1)">+</button></div></div>'}
 function tg(t,s,k){return '<div class="row"><b>'+t+'<small>'+s+'</small></b><button class="tog'+(S[k]?' on':'')+'" onclick="S.'+k+'=!S.'+k+';rr()" aria-label="'+t+'"></button></div>'}
 function ch(k,d){var v=S[k]+d;
 if(k=='n')v=Math.max(3,Math.min(15,v));else if(k=='min')v=Math.max(0,Math.min(15,v));else v=Math.max(1,Math.min(v,4));
-S[k]=v;var N=S.mode=='online'?O.players.length:S.n,m=Math.max(1,Math.floor((N-1)/2));if(S.imp>m)S.imp=m;rr()}
+S[k]=v;if(k=='n')S.sc=null;var N=S.mode=='online'?O.players.length:S.n,m=Math.max(1,Math.floor((N-1)/2));if(S.imp>m)S.imp=m;rr()}
 function tc(k){if(S.cats[k])delete S.cats[k];else S.cats[k]=1;S.err='';rr()}
 function selAll(f){S.err="";S.cats={};if(f)K.forEach(function(k){S.cats[k]=1});rr()}
 function go(){
@@ -179,7 +180,7 @@ T=Date.now()+S.min*60000;run()}
 function run(){clearInterval(S.tid);
 S.tid=setInterval(function(){var e=document.getElementById('tm');if(!e)return clearInterval(S.tid);
 var r=Math.ceil((T-Date.now())/1000);
-if(r<=0){clearInterval(S.tid);e.textContent='Süre doldu';e.className='tm end';buz();setTimeout(buz,300)}else e.textContent=fm(r)},250)}
+if(r<=0){clearInterval(S.tid);e.textContent='Süre doldu';e.className='tm end';buz(2)}else e.textContent=fm(r)},250)}
 function bk(){if(confirm('Oyundan çıkılsın mı? Tur kaybolur.')){T=0;setup()}}
 function rev(){
 $(B('bk()')+'<div class="center"><div class="who">Emin misin?</div><div class="name" style="font-size:34px">Herkes kararını verdi mi?</div><button class="big" onclick="rev2()">Evet, sahtekârı göster</button><button class="big alt" onclick="play()">Hayır, devam</button></div>')}
@@ -189,7 +190,11 @@ $(B('bk()')+'<div class="center"><div class="who">Sahtekâr</div><div style="mar
 (S.roles.length?'<p class="sub">Yakalandıysa son şansı var: kelimeyi tahmin etsin. Doğru bilirse kazanır.</p>':'')+
 '<button class="big" onclick="rev3()">Kelimeyi göster</button></div>')}
 function rev3(){
-$(B('bk()')+'<div class="center"><div class="card"><div class="k">Kelime ('+S.cat+')</div><div class="w">'+S.word[0]+'</div></div><button class="big" onclick="go()">Yeni tur</button><button class="big alt" onclick="setup()">Ayarlar</button></div>')}
+$(B('bk()')+'<div class="center"><div class="card"><div class="k">Kelime ('+S.cat+')</div><div class="w">'+S.word[0]+'</div></div><p class="sub" style="margin-top:6px">Sahtekâr kazanırsa 2 puan, diğerleri kazanırsa her biri 1 puan alır.</p><div class="who" style="margin-top:14px">Kim kazandı?</div><button class="big" style="margin-top:8px" onclick="win(1)">Sahtekâr kazandı</button><button class="big alt" onclick="win(0)">Diğerleri kazandı</button><button class="mini" style="margin-top:18px;width:100%;flex:none" onclick="go()">Puansız yeni tur</button></div>')}
+function win(f){if(!S.sc)S.sc=[];for(var i=0;i<S.n;i++){var im=S.roles.indexOf(i)>-1;S.sc[i]=(S.sc[i]||0)+(f?(im?2:0):(im?0:1))}rev4()}
+function rev4(){var r=[];for(var i=0;i<S.n;i++)r.push({n:'Oyuncu '+(i+1),p:(S.sc||[])[i]||0});
+$(B('bk()')+'<div class="center"><div class="who">Skor tablosu</div>'+scoreHTML(r)+'<button class="big" onclick="go()">Yeni tur</button><button class="big alt" onclick="setup()">Ayarlar</button><button class="mini" style="margin-top:18px;width:100%;flex:none" onclick="S.sc=null;rev4()">Puanları sıfırla</button></div>')}
+function scoreHTML(r){r=r.slice().sort(function(a,b){return b.p-a.p});return '<div style="margin:12px 0 4px;text-align:left">'+r.map(function(x,i){return '<div class="row"><b>'+(i==0&&x.p>0?'🏆 ':'')+esc(x.n)+'</b><span style="font-size:24px;font-weight:800">'+x.p+'</span></div>'}).join('')+'</div>'}
 
 /* ===== ONLINE MOD (Supabase Realtime, tablo gerekmez) ===== */
 var SB_URL="https://azpiwzrajmuiiznrcnud.supabase.co";   // <-- Supabase Project URL
@@ -200,10 +205,17 @@ function esc(t){return String(t).replace(/[&<>"']/g,function(c){return '&#'+c.ch
 function rr(){S.mode=='online'?lobby(1):setup(1)}
 function ct(){return K.map(function(k){return '<button class="cat'+(S.cats[k]?' on':'')+'" style="--c:'+D[k][2].split(',')[0]+'" onclick="tc(\''+k+'\')"><i>'+D[k][0]+'</i>'+k+'</button>'}).join('')}
 function home(){S.mode='local';theme();deco('🕵️ 🎭 ❓ 🔍 🎲 🃏');
-$('<div class="hm"><div class="logo">🕵️</div><h1 class="ttl">Sahtekâr<em>.</em></h1><p class="tag">Kelimeyi bilmeyeni bul.</p>'+
+$('<div class="hm"><div class="logo">🕵️</div><h1 class="ttl">Sahtekâr<em>.</em></h1><p class="tag">Kelimeyi bilmeyeni bul.</p>'+resBtn()+
 '<button class="mode" onclick="setup()"><i>📱</i><div><b>Tek telefon</b><span>Telefon elden ele dolaşır, yüz yüze oynanır</span></div></button>'+
 '<button class="mode b" onclick="omenu()"><i>🌐</i><div><b>Online oda</b><span>Herkes kendi telefonundan kodla katılır</span></div></button>'+
-'<div class="how"><div><i>🃏</i>Kartını gör</div><div><i>🤫</i>Sahtekâr bilmez</div><div><i>🗣️</i>Konuş, bul</div></div></div>')}
+'<div class="how"><div><i>🃏</i>Kartını gör</div><div><i>🤫</i>Sahtekâr bilmez</div><div><i>🗣️</i>Konuş, bul</div></div><button class="mini" style="width:100%;flex:none;margin-top:14px;padding:14px" onclick="rules()">❓ Nasıl oynanır?</button></div>')}
+function rules(){S.mode='local';theme();
+$(B('home()')+'<h1>Nasıl oynanır?</h1><div style="margin-top:14px">'+[['🃏','Herkes kartını gizlice görür','Herkes kategoriyi ve gizli kelimeyi görür. Sahtekâr kelimeyi bilmez; yalnızca kategoriyi ve küçük bir ipucunu görür.'],['🗣️','Sırayla konuşun','Sırayla kelimeyle ilgili tek bir şey söyleyin. Çok açık olursa sahtekâr anlar, çok belirsiz olursa şüpheli görünürsün.'],['🔍','Sahtekârı bulun','Süre bitince birlikte karar verin ve sahtekârı gösterin. Sahtekâr yakalanırsa kelimeyi tahmin ederek kazanabilir.'],['🏆','Puan','Sahtekâr kazanırsa 2 puan, diğerleri kazanırsa her biri 1 puan alır.']].map(function(r){return '<div class="row" style="align-items:flex-start;gap:14px"><span style="font-size:32px">'+r[0]+'</span><div style="flex:1"><b>'+r[1]+'</b><small style="font-size:14px;margin-top:4px;line-height:1.35">'+r[2]+'</small></div></div>'}).join('')+'</div><button class="big go" onclick="home()">Anladım</button>')}
+function sess(){try{var x=JSON.parse(localStorage.getItem('sk_sess')||'null');if(x&&x.code&&Date.now()-x.t<10800000)return x}catch(e){}return null}
+function touch(){try{var x=JSON.parse(localStorage.getItem('sk_sess')||'null');if(x){x.t=Date.now();localStorage.setItem('sk_sess',JSON.stringify(x))}}catch(e){}}
+function resBtn(){var x=sess();if(!x)return '';return '<button class="mode b" onclick="back2()"><i>↩️</i><div><b>Odaya geri dön</b><span>'+esc(x.code)+' · '+esc(x.name)+(x.admin?' · yönetici':'')+'</span></div></button>'}
+function back2(){var x=sess();if(!x)return home();if(!sbOk())return omenu(sbErr());O.name=x.name;O.id=x.id;O.admin=x.admin;O.code=x.code;O.res=1;S.mode='online';conn()}
+function sbErr(){return window.supabase?'Online ayarı yapılmamış.':'Online bileşen yüklenemedi. İnterneti kontrol edip sayfayı yenile.'}
 function sbOk(){if(O.sb)return true;try{if(!SB_URL||!SB_KEY||!window.supabase)return false;O.sb=window.supabase.createClient(SB_URL,SB_KEY);return true}catch(e){return false}}
 function rid(){return Math.random().toString(36).slice(2,10)}
 function rcode(){var a='ABCDEFGHJKLMNPRSTUVYZ23456789',c='';for(var i=0;i<4;i++)c+=a[Math.floor(Math.random()*a.length)];return c}
@@ -217,10 +229,13 @@ $(B('home()')+'<h1>Online oda</h1><p class="sub">Kayıt yok. Takma ad yaz, oda k
 '<input id="cd" class="inp code" maxlength="4" placeholder="KOD" autocapitalize="characters" value="'+esc(q.toUpperCase())+'">'+
 '<button class="big alt" onclick="jn()">Odaya katıl</button><div class="err">'+(err||'')+'</div>')}
 function gn(){var n=document.getElementById('nm').value.trim().slice(0,14);if(!n){omenu('Takma ad yaz.');return null}try{localStorage.setItem('sk_name',n)}catch(e){}return n}
-function mk(){var n=gn();if(!n)return;if(!sbOk())return omenu('Online ayarı yapılmamış (SB_URL / SB_KEY).');O.name=n;O.id=rid();O.admin=true;O.code=rcode();conn()}
-function jn(){var n=gn();if(!n)return;var c=document.getElementById('cd').value.trim().toUpperCase();if(c.length!=4)return omenu('4 haneli oda kodunu yaz.');if(!sbOk())return omenu('Online ayarı yapılmamış (SB_URL / SB_KEY).');O.name=n;O.id=rid();O.admin=false;O.code=c;conn()}
+function mk(){var n=gn();if(!n)return;if(!sbOk())return omenu(sbErr());O.name=n;O.id=rid();O.admin=true;O.code=rcode();O.sc=null;O.res=0;conn()}
+function jn(){var n=gn();if(!n)return;var c=document.getElementById('cd').value.trim().toUpperCase();if(c.length!=4)return omenu('4 haneli oda kodunu yaz.');if(!sbOk())return omenu(sbErr());O.name=n;O.id=rid();O.admin=false;O.code=c;O.sc=null;O.res=0;conn()}
 function conn(){
-O.players=[];O.role=null;O.seen=false;O.state='conn';O.end=0;
+if(navigator.onLine===false){O.state='';return omenu('İnternet bağlantın yok. Bağlanınca tekrar dene.')}
+O.players=[];O.role=null;O.seen=false;O.state='conn';O.end=0;O.subd=false;
+try{localStorage.setItem('sk_sess',JSON.stringify({code:O.code,id:O.id,name:O.name,admin:O.admin,t:Date.now()}))}catch(e){}
+clearTimeout(O.ct);O.ct=setTimeout(function(){if(O.state=='conn'&&!O.subd){leave(0);omenu('Bağlantı zaman aşımına uğradı. Tekrar dene.')}},10000);
 $(B('lv()')+'<div class="center"><div class="who">Bağlanıyor…</div></div>');
 O.ch=O.sb.channel('sk-'+O.code,{config:{presence:{key:O.id},broadcast:{self:false}}});
 O.ch.on('presence',{event:'sync'},psync)
@@ -229,27 +244,31 @@ O.ch.on('presence',{event:'sync'},psync)
 .on('broadcast',{event:'reveal'},function(m){onReveal(m.payload)})
 .on('broadcast',{event:'lobby'},function(){toLobby()})
 .on('broadcast',{event:'got'},function(m){O.got[m.payload.id]=1})
+.on('broadcast',{event:'score'},function(m){onScore(m.payload)})
+.on('broadcast',{event:'need'},function(m){if(!O.admin||!O.round||!m.payload||!O.pl[m.payload.id]||O.state=='lobby')return;var id=m.payload.id,R=O.round,rv=(O.state=='reveal'||O.state=='score')?{imps:R.ps.filter(function(p){return R.imps.indexOf(p.id)>-1}).map(function(p){return p.name}),word:R.word,cat:R.cat}:null,r={role:O.pl[id],pay:{cat:R.cat,starter:O.starter,min:O.min},st:O.state,end:O.end,rv:rv},c=O.sb.channel('sk-'+O.code+'-'+id);c.subscribe(function(s){if(s=='SUBSCRIBED'){c.send({type:'broadcast',event:'resume',payload:r});setTimeout(function(){O.sb.removeChannel(c)},1200)}})})
 .subscribe(function(st){
 if(st=='SUBSCRIBED'){
+O.subd=true;
 O.ch.track({id:O.id,name:O.name,admin:O.admin});
-O.priv=O.sb.channel('sk-'+O.code+'-'+O.id).on('broadcast',{event:'role'},function(m){gotRole(m.payload)}).subscribe();
-if(O.admin)toLobby();else O.tm=setTimeout(function(){if(!O.seen){leave(0);omenu('Oda bulunamadı.')}},4500)
-}else if(st=='CHANNEL_ERROR'||st=='TIMED_OUT'){leave(0);omenu('Bağlantı kurulamadı. Ayarları ve interneti kontrol et.')}})}
+O.priv=O.sb.channel('sk-'+O.code+'-'+O.id).on('broadcast',{event:'role'},function(m){gotRole(m.payload)}).on('broadcast',{event:'resume'},function(m){onResume(m.payload)}).subscribe();
+if(O.admin){toLobby();if(O.res)O.ch.send({type:'broadcast',event:'lobby',payload:{}})}else O.tm=setTimeout(function(){if(!O.seen){leave(0);omenu('Bu kodla açık bir oda bulunamadı. Kodu kontrol et ve yöneticinin odada olduğundan emin ol.')}},7000)
+}else if(st=='CHANNEL_ERROR'||st=='TIMED_OUT'){leave(0);console.error('realtime',st);omenu('Sunucuya bağlanılamadı. İnternetini kontrol edip tekrar dene.')}})}
 function psync(){
 var st=O.ch.presenceState(),a=[];
 Object.keys(st).forEach(function(k){var x=st[k][0];if(x)a.push({id:x.id,name:x.name,admin:!!x.admin})});
 var had=O.seen,ha=a.some(function(p){return p.admin});O.players=a;if(ha)O.seen=true;
-if(!O.admin&&had&&!ha){leave(0);return omenu('Yönetici çıktı, oda kapandı.')}
-if(O.state=='conn'&&O.seen){clearTimeout(O.tm);O.state='lobby'}
+touch();if(!O.admin&&had&&!ha){if(!O.gt)O.gt=setTimeout(function(){O.gt=0;if(O.state){leave(0);omenu('Yönetici odadan ayrıldı, oda kapandı.')}},8000)}
+if(ha&&O.gt){clearTimeout(O.gt);O.gt=0}
+if(O.state=='conn'&&O.seen){clearTimeout(O.tm);O.state='lobby';if(!O.admin)O.ch.send({type:'broadcast',event:'need',payload:{id:O.id}})}
 if(O.state=='lobby')lobby(1)}
 function toLobby(){O.state='lobby';O.role=null;O.end=0;clearInterval(S.tid);theme();lobby()}
 function lobby(keep){
 var ps=O.players.slice().sort(function(a,b){return (b.admin-a.admin)||a.name.localeCompare(b.name)});
 var h=B('lv()')+'<div class="split"><div><div class="who">Oda kodu</div><div class="rc" onclick="cp()">'+O.code+'</div><div style="display:flex;gap:8px"><button class="mini" onclick="cp()">Kopyala</button><button class="mini" onclick="sh()">Paylaş</button></div>'+
 '<h2>Oyuncular ('+ps.length+')</h2><div>'+ps.map(function(p){return '<span class="chip'+(p.id==O.id?' me':'')+'">'+(p.admin?'👑 ':'')+esc(p.name)+'</span>'}).join('')+'</div>';
-if(O.admin)h+='<h2>Ayarlar</h2>'+st('Sahtekâr sayısı','imp','')+st('Tartışma süresi','min','dk')+tg('Sahtekâra ipucu ver','Kategori ve esrarengiz bir ipucu görür','hint')+tg('Sürpriz tur','Bazen hiç sahtekâr olmaz','surp')+
+if(O.admin)h+='<h2>Ayarlar</h2>'+st('Sahtekâr sayısı','imp','')+st('Tartışma süresi','min','dk')+tg('Sahtekâra ipucu ver','Kategori ve esrarengiz bir ipucu görür','hint')+tg('Sürpriz tur','Bazen hiç sahtekâr olmaz','surp')+tg('Ses ve titreşim','Kart ve süre bitiminde','snd')+
 '</div><div>'+catBox()+'</div></div><button class="big go" onclick="ostart()">Oyunu başlat</button>';
-else h+='<p class="sub" style="margin-top:22px">Yönetici oyunu başlatınca kartın gelecek.</p></div><div></div></div>';
+else h+='<h2>Ayarlar</h2>'+tg('Ses ve titreşim','Kart ve süre bitiminde','snd')+'<p class="sub" style="margin-top:22px">Yönetici oyunu başlatınca kartın gelecek.</p></div><div></div></div>';
 KEEP=keep?1:0;$(h,1)}
 function cp(){try{navigator.clipboard.writeText(O.code)}catch(e){}}
 function sh(){var u=location.origin+location.pathname+'?oda='+O.code;try{if(navigator.share){navigator.share({title:'Sahtekâr',text:'Odaya katıl: '+O.code,url:u});return}navigator.clipboard.writeText(u)}catch(e){}}
@@ -292,18 +311,23 @@ $(B('lv()')+'<div class="center"><div style="font-size:64px;line-height:1.1">'+D
 '<button class="big alt" onclick="oshow()">Kartımı tekrar gör</button>'+(O.admin?'<button class="big" onclick="orev()">Sahtekârı göster</button>':'<p class="sub" style="margin-top:18px">Sahtekârı yönetici açıklayacak.</p>')+'</div>');
 if(O.end)runT()}
 function otimer(){O.ch.send({type:'broadcast',event:'timer',payload:{sec:O.min*60}});O.end=Date.now()+O.min*60000;runT()}
-function runT(){clearInterval(S.tid);S.tid=setInterval(function(){var e=document.getElementById('tm');if(!e)return;var x=Math.ceil((O.end-Date.now())/1000);if(x<=0){clearInterval(S.tid);e.textContent='Süre doldu';e.className='tm end';buz()}else e.textContent=fm(x)},250)}
+function runT(){clearInterval(S.tid);S.tid=setInterval(function(){var e=document.getElementById('tm');if(!e)return;var x=Math.ceil((O.end-Date.now())/1000);if(x<=0){clearInterval(S.tid);e.textContent='Süre doldu';e.className='tm end';buz(2)}else e.textContent=fm(x)},250)}
 function orev(){var R=O.round,n=R.ps.filter(function(p){return R.imps.indexOf(p.id)>-1}).map(function(p){return p.name}),pl={imps:n,word:R.word,cat:R.cat};O.ch.send({type:'broadcast',event:'reveal',payload:pl});onReveal(pl)}
 function onReveal(p){O.state='reveal';clearInterval(S.tid);
 var c=p.imps.length?p.imps.map(function(n){return '<span class="chip">'+esc(n)+'</span>'}).join(''):'<div class="name" style="font-size:34px;margin:0">Bu turda sahtekâr yoktu!</div>';
-$(B('lv()')+'<div class="center"><div class="who">Sahtekâr</div><div style="margin:10px 0 14px">'+c+'</div><div class="card"><div class="k">Kelime ('+esc(p.cat)+')</div><div class="w">'+esc(p.word)+'</div></div>'+(O.admin?'<button class="big" onclick="onext()">Yeni tur</button>':'<p class="sub">Yönetici yeni tur başlatacak.</p>')+'</div>')}
+$(B('lv()')+'<div class="center"><div class="who">Sahtekâr</div><div style="margin:10px 0 14px">'+c+'</div><div class="card"><div class="k">Kelime ('+esc(p.cat)+')</div><div class="w">'+esc(p.word)+'</div></div>'+(O.admin?'<div class="who" style="margin-top:14px">Kim kazandı?</div><button class="big" style="margin-top:8px" onclick="owin(1)">Sahtekâr kazandı</button><button class="big alt" onclick="owin(0)">Diğerleri kazandı</button><button class="mini" style="margin-top:18px;width:100%;flex:none" onclick="onext()">Puansız yeni tur</button>':'<p class="sub">Yönetici kazananı seçecek.</p>')+'</div>')}
+function owin(f){var R=O.round;O.sc=O.sc||{};R.ps.forEach(function(p){var im=R.imps.indexOf(p.id)>-1,x=O.sc[p.id]||(O.sc[p.id]={n:p.name,p:0});x.n=p.name;x.p+=f?(im?2:0):(im?0:1)});
+var rows=Object.keys(O.sc).map(function(k){return O.sc[k]});O.ch.send({type:'broadcast',event:'score',payload:{rows:rows}});onScore({rows:rows})}
+function onScore(p){O.state='score';clearInterval(S.tid);
+$(B('lv()')+'<div class="center"><div class="who">Skor tablosu</div>'+scoreHTML(p.rows)+(O.admin?'<button class="big" onclick="onext()">Yeni tur</button>':'<p class="sub">Yönetici yeni tur başlatacak.</p>')+'</div>')}
+function onResume(r){if(O.admin||O.role)return;O.role=r.role;O.cat=r.pay.cat;O.starter=r.pay.starter;O.min=r.pay.min;theme(r.pay.cat);if(r.rv)return onReveal(r.rv);if(r.st=='play'){O.end=r.end;oplay()}else opass()}
 function onext(){O.ch.send({type:'broadcast',event:'lobby',payload:{}});toLobby()}
 function lv(){if(O.state&&O.state!='lobby'&&O.state!='conn'&&!confirm('Odadan çıkılsın mı?'))return;leave()}
 function leave(go){
-clearTimeout(O.tm);clearTimeout(O.rt);clearInterval(S.tid);
+clearTimeout(O.tm);clearTimeout(O.rt);clearTimeout(O.ct);clearTimeout(O.gt);O.gt=0;clearInterval(S.tid);try{localStorage.removeItem('sk_sess')}catch(e){}
 try{if(O.ch)O.sb.removeChannel(O.ch);if(O.priv)O.sb.removeChannel(O.priv)}catch(e){}
 O.ch=O.priv=null;O.state='';O.role=null;O.end=0;O.admin=false;S.mode='local';theme();if(go!==0)home()}
-/oda=/.test(location.search)?omenu():home();
+/oda=/.test(location.search)?omenu():(sess()&&Date.now()-sess().t<600000&&sbOk()?back2():home());
 </script>
 </body>
 </html>
